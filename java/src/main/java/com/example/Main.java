@@ -23,6 +23,15 @@ public class Main {
         System.out.println("Starting Java server on port 9000");
         Server server = ServerBuilder.forPort(9000).addService(new GreeterImpl()).build().start();
 
+        // Set up gRPC client
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9000).usePlaintext().build();
+        GreeterGrpc.GreeterBlockingStub stub = GreeterGrpc.newBlockingStub(channel);
+
+        // Call the service
+        GreeterOuterClass.HelloRequest request = GreeterOuterClass.HelloRequest.newBuilder().setName("Java").build();
+        GreeterOuterClass.HelloResponse response = stub.sayHello(request);
+        response.getMessageList().forEach(msg -> System.out.println("Java " + msg));
+
         // Block for server termination
         server.awaitTermination();
     }
