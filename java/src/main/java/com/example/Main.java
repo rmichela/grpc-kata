@@ -1,5 +1,6 @@
 package com.example;
 
+import io.grpc.*;
 import io.grpc.stub.*;
 
 public class Main {
@@ -17,7 +18,12 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println("Hello Java");
+    public static void main(String[] args) throws Exception {
+        // Build the server
+        System.out.println("Starting Java server on port 9000");
+        Server server = ServerBuilder.forPort(9000).addService(new GreeterImpl()).build().start();
+
+        // Block for server termination
+        server.awaitTermination();
     }
 }
