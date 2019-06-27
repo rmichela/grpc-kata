@@ -1,3 +1,2 @@
 #! /bin/sh
-make build
-make run
+make gen build run
