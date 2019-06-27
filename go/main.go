@@ -37,4 +37,25 @@ func main() {
 			panic(err)
 		}
 	}()
+
+	// Call the service
+	conn, err := grpc.Dial("localhost:9001", grpc.WithInsecure())
+	if err != nil {
+		panic(err)
+	}
+	defer conn.Close()
+
+	client := NewGreeterClient(conn)
+	req := HelloRequest{Name: "Golang"}
+
+	resp, err := client.SayHello(context.Background(), &req)
+	if err != nil {
+		panic(err)
+	}
+	for _, message := range resp.GetMessage() {
+		fmt.Println(message)
+	}
+
+	// Wait to exit
+	fmt.Scanln()
 }
