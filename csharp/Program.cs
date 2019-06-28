@@ -31,8 +31,20 @@ namespace example_csharp
             };
             server.Start();
 
+            // Set up gRPC client
+            Channel channel = new Channel("localhost:9002", ChannelCredentials.Insecure);
+            var client = new Greeter.GreeterClient(channel);
+
+            // Call the service
+            var req = new HelloRequest { Name = "C#" };
+            var resp = client.SayHello(req);
+            foreach (string msg in resp.Message) {
+                Console.WriteLine(msg);
+            }
+
             // Block for server termination
             Console.ReadKey();
+            channel.ShutdownAsync().Wait();
             server.ShutdownAsync().Wait();
         }
     }
