@@ -23,7 +23,17 @@ namespace example_csharp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello C#!");
+            // Build the server
+            Console.WriteLine("Starting Java server on port 9002");
+            Server server = new Server {
+                Services = { Greeter.BindService(new GreeterImpl()) },
+                Ports = { new ServerPort("localhost", 9002, ServerCredentials.Insecure)}
+            };
+            server.Start();
+
+            // Block for server termination
+            Console.ReadKey();
+            server.ShutdownAsync().Wait();
         }
     }
 }
