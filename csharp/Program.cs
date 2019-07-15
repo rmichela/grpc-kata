@@ -31,8 +31,12 @@ namespace example_csharp
             };
             server.Start();
 
+            // Call the Java server on port 9000
+            Console.WriteLine("Press enter to call the Java server...");
+            Console.ReadKey();
+
             // Set up gRPC client
-            Channel channel = new Channel("localhost:9002", ChannelCredentials.Insecure);
+            Channel channel = new Channel("localhost:9000", ChannelCredentials.Insecure);
             var client = new Greeter.GreeterClient(channel);
 
             // Call the service

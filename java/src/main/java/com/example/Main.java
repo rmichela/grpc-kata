@@ -23,8 +23,12 @@ public class Main {
         System.out.println("Starting Java server on port 9000");
         Server server = ServerBuilder.forPort(9000).addService(new GreeterImpl()).build().start();
 
+        // Call the Go server on port 9001
+        System.out.println("Press enter to call Go server...");
+        System.in.read();
+
         // Set up gRPC client
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9000).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9001).usePlaintext().build();
         GreeterGrpc.GreeterBlockingStub stub = GreeterGrpc.newBlockingStub(channel);
 
         // Call the service

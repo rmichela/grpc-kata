@@ -38,8 +38,12 @@ func main() {
 		}
 	}()
 
+	// Call the C# server on port 9002
+	fmt.Println("Press enter to call the C# server...")
+	fmt.Scanln()
+
 	// Call the service
-	conn, err := grpc.Dial("localhost:9001", grpc.WithInsecure())
+	conn, err := grpc.Dial("localhost:9002", grpc.WithInsecure())
 	if err != nil {
 		panic(err)
 	}
