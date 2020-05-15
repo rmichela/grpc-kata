@@ -8,7 +8,7 @@ namespace example_csharp
     class GreeterImpl : Greeter.GreeterBase
     {
         public override Task<HelloResponse> SayHello(HelloRequest request, ServerCallContext context) {
-            Console.WriteLine("Java service request: " + request.Name);
+            Console.WriteLine("C# service request: " + request.Name);
             return Task.FromResult(new HelloResponse {
                 Message = {
                     "Hello " + request.Name,
@@ -24,7 +24,7 @@ namespace example_csharp
         static void Main(string[] args)
         {
             // Build the server
-            Console.WriteLine("Starting Java server on port 9002");
+            Console.WriteLine("Starting C# server on port 9002");
             Server server = new Server {
                 Services = { Greeter.BindService(new GreeterImpl()) },
                 Ports = { new ServerPort("localhost", 9002, ServerCredentials.Insecure)}
